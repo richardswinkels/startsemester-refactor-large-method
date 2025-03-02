@@ -13,24 +13,55 @@ namespace GradeCalculator
             double assignmentAverage = CalculateAverage(assignmentScores);
             double quizAverage = CalculateAverage(quizScores);
             double examAverage = CalculateAverage(examScores);
+            
+            double assignmentWeight = HandleWeightInput("Enter an assignment weight (decimal between 0 and 1): ");
+            double quizWeight = HandleWeightInput("Enter a quiz weight (decimal between 0 and 1): ");
+            double examWeight = HandleWeightInput("Enter an exam weight (decimal between 0 and 1):  ");
 
-            double finalGrade = CalculateFinalGrade(assignmentAverage, quizAverage, examAverage);
+            double finalGrade = CalculateFinalGrade(assignmentAverage, quizAverage, examAverage, assignmentWeight, quizWeight, examWeight);
 
             DisplayFinalGrade(finalGrade);
         }
 
         static double[] HandleScoreInput(string message)
         {
-            Console.WriteLine(message);
-            string[] input = Console.ReadLine().Split(' ');
-            double[] scores = Array.ConvertAll(input, double.Parse);
+            double[]? scores = null;
+
+            while (scores == null)
+            {
+                Console.WriteLine(message);
+                string[] input = Console.ReadLine().Split(' ');
+
+                try
+                {
+                    scores = Array.ConvertAll(input, double.Parse);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid input. Please enter valid numeric scores separated by spaces.");
+                }
+            }
 
             return scores;
         }
 
-        static double CalculateFinalGrade(double assignmentAverage, double quizAverage, double examAverage)
+        static double HandleWeightInput(string message)
         {
-            return (assignmentAverage * 0.4) + (quizAverage * 0.2) + (examAverage * 0.4);
+            double number = 0;
+
+            Console.WriteLine(message);
+
+            while (!Double.TryParse(Console.ReadLine(), out number) && number >= 0 && number <= 1)
+            {
+                Console.WriteLine("ERROR: verkeerd formaat nummer ingevoerd! Probeer het nogmaals.");
+            }
+
+            return number;
+        }
+
+        static double CalculateFinalGrade(double assignmentAverage, double quizAverage, double examAverage, double assignmentWeight, double quizWeight, double examWeight)
+        {
+            return (assignmentAverage * assignmentWeight) + (quizAverage * quizWeight) + (examAverage * examWeight);
         }
 
         static double CalculateAverage(double[] scores)
