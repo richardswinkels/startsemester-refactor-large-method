@@ -2,9 +2,9 @@
 
 namespace GradeCalculator
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             double[] assignmentScores = HandleScoreInput("Enter assignment scores (separated by spaces): ");
             double[] quizScores = HandleScoreInput("Enter quiz scores (separated by spaces): ");
@@ -23,7 +23,7 @@ namespace GradeCalculator
             DisplayFinalGrade(finalGrade);
         }
 
-        static double[] HandleScoreInput(string message)
+        public static double[] HandleScoreInput(string message)
         {
             double[]? scores = null;
 
@@ -45,7 +45,7 @@ namespace GradeCalculator
             return scores;
         }
 
-        static double HandleWeightInput(string message)
+        public static double HandleWeightInput(string message)
         {
             double number = 0;
 
@@ -59,12 +59,12 @@ namespace GradeCalculator
             return number;
         }
 
-        static double CalculateFinalGrade(double assignmentAverage, double quizAverage, double examAverage, double assignmentWeight, double quizWeight, double examWeight)
+        public static double CalculateFinalGrade(double assignmentAverage, double quizAverage, double examAverage, double assignmentWeight, double quizWeight, double examWeight)
         {
             return (assignmentAverage * assignmentWeight) + (quizAverage * quizWeight) + (examAverage * examWeight);
         }
 
-        static double CalculateAverage(double[] scores)
+        public static double CalculateAverage(double[] scores)
         {
             double sum = 0;
             foreach (var score in scores)
@@ -74,7 +74,7 @@ namespace GradeCalculator
             return sum / scores.Length;
         }
 
-        static void DisplayFinalGrade(double finalGrade)
+        public static void DisplayFinalGrade(double finalGrade)
         {
             Console.WriteLine($"The final grade is: {finalGrade}");
         }
