@@ -30,7 +30,7 @@ namespace GradeCalculator
             while (scores == null)
             {
                 Console.WriteLine(message);
-                string[] input = Console.ReadLine().Split(' ');
+                string[] input = Console.ReadLine().TrimEnd().Split(' ');
 
                 try
                 {
@@ -48,12 +48,27 @@ namespace GradeCalculator
         public static double HandleWeightInput(string message)
         {
             double number = 0;
+            bool isValid = false;
 
             Console.WriteLine(message);
 
-            while (!Double.TryParse(Console.ReadLine(), out number) && number >= 0 && number <= 1)
+            while (!isValid)
             {
-                Console.WriteLine("ERROR: verkeerd formaat nummer ingevoerd! Probeer het nogmaals.");
+                string? input = Console.ReadLine();
+
+                if (!Double.TryParse(input, out number))
+                {
+                    Console.WriteLine("ERROR: Ongeldige invoer! Voer een geldig getal in.");
+                    continue;
+                }
+
+                if (number < 0 || number > 1)
+                {
+                    Console.WriteLine("ERROR: Voer een getal in dat kleiner dan of gelijk aan 0 is, of groter dan of gelijk aan 1.");
+                    continue;
+                }
+
+                isValid = true;
             }
 
             return number;
